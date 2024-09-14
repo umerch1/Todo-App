@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import TodoItems from "../../components/TodoItems";
 import { childrenTypes } from "../../Types/TodoTypes";
-import { useGetTodosQuery } from "../../../../store/api";
 
 const TodoListComponent = ({
   todos,
@@ -20,8 +19,6 @@ const TodoListComponent = ({
   completeTodo,
   editTodo,
 }: childrenTypes) => {
-  const { data = [] } = useGetTodosQuery({});
-  console.log(data);
   return (
     <Container maxWidth="sm" sx={{ height: "100vh" }}>
       <AppBar position="static">
@@ -30,7 +27,7 @@ const TodoListComponent = ({
         </Toolbar>
       </AppBar>
       <Stack height={"80%"} direction={"column"} spacing={"1rem"} p={"1rem"}>
-        {data.map((i) => {
+        {todos.map((i) => {
           return (
             <TodoItems
               key={i.id}

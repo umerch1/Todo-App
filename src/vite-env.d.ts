@@ -4,7 +4,7 @@
 export type TodoItemTypes = {
     completed: boolean
     id: number
-    title: string
+    todo: string
     userId: number
 
 }

@@ -9,23 +9,20 @@ import {
 import { Delete, Edit } from "@mui/icons-material";
 import { useState } from "react";
 import { TodoItemTypes } from "../../../vite-env";
+import { childrenTypes } from "../Types/TodoTypes";
 
 type PropsType = {
   todo: TodoItemTypes;
   deleteTodo: (id: TodoItemTypes["id"]) => void;
-  completeTodo: (id: TodoItemTypes["id"]) => void;
-  editTodo: (
-    id: TodoItemTypes["id"],
-    completed: TodoItemTypes["title"]
-  ) => void;
+  completeTodo: childrenTypes["completeTodo"];
+  editTodo: (id: TodoItemTypes["id"], completed: TodoItemTypes["todo"]) => void;
 };
 const TodoItems = ({ todo, deleteTodo, completeTodo, editTodo }: PropsType) => {
   const [activeEdit, setActiveEdit] = useState<boolean>(false);
-  const [editTitle, setEditTitle] = useState<TodoItemTypes["title"]>(
-    todo.title
-  );
+  const [editTitle, setEditTitle] = useState<TodoItemTypes["todo"]>(todo.todo);
   return (
     <Paper
+      key={todo.userId}
       variant="elevation"
       sx={{
         padding: "1rem",
@@ -48,12 +45,12 @@ const TodoItems = ({ todo, deleteTodo, completeTodo, editTodo }: PropsType) => {
             marginRight={"auto"}
             sx={{ textDecoration: todo.completed ? "line-through" : "" }}
           >
-            {todo.title}
+            {todo.todo}
           </Typography>
         )}
         <Checkbox
           checked={todo.completed}
-          onChange={() => completeTodo(todo.id)}
+          onChange={() => completeTodo(todo.id, todo.completed)}
         />
         <Button onClick={() => deleteTodo(todo.id)}>
           <Delete />
