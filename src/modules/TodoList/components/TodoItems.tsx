@@ -15,11 +15,14 @@ type PropsType = {
   todo: TodoItemTypes;
   deleteTodo: (id: TodoItemTypes["id"]) => void;
   completeTodo: childrenTypes["completeTodo"];
-  editTodo: (id: TodoItemTypes["id"], completed: TodoItemTypes["todo"]) => void;
+  editTodo: childrenTypes["editTodo"];
 };
 const TodoItems = ({ todo, deleteTodo, completeTodo, editTodo }: PropsType) => {
   const [activeEdit, setActiveEdit] = useState<boolean>(false);
-  const [editTitle, setEditTitle] = useState<TodoItemTypes["todo"]>(todo.todo);
+  const [editTitle, setEditTitle] = useState<TodoItemTypes["title"]>(
+    todo.title
+  );
+  const [completed, setCompleted] = useState<TodoItemTypes["completed"]>(true);
   return (
     <Paper
       key={todo.userId}
@@ -35,7 +38,7 @@ const TodoItems = ({ todo, deleteTodo, completeTodo, editTodo }: PropsType) => {
             onChange={(e) => setEditTitle(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter" && editTitle !== "") {
-                editTodo(todo.id, editTitle);
+                editTodo(todo, editTitle);
                 setActiveEdit(false);
               }
             }}
@@ -43,14 +46,17 @@ const TodoItems = ({ todo, deleteTodo, completeTodo, editTodo }: PropsType) => {
         ) : (
           <Typography
             marginRight={"auto"}
-            sx={{ textDecoration: todo.completed ? "line-through" : "" }}
+            sx={{ textDecoration: completed ? "line-through" : "" }}
           >
-            {todo.todo}
+            {todo.title}
           </Typography>
         )}
         <Checkbox
-          checked={todo.completed}
-          onChange={() => completeTodo(todo.id, todo.completed)}
+          checked={completed}
+          onChange={(pre) => {
+            setCompleted(pre.target.checked);
+            completeTodo(completed, todo);
+          }}
         />
         <Button onClick={() => deleteTodo(todo.id)}>
           <Delete />
