@@ -3,8 +3,8 @@
 
 export type TodoItemTypes = {
     completed: boolean
-    id: number
-    todo: string
+    id: string
+    title: string
     userId: number
 
 }

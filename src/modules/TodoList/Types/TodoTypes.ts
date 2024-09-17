@@ -3,12 +3,12 @@ import { TodoItemTypes } from "../../../vite-env"
 
 export type childrenTypes = {
     todos: TodoItemTypes[]
-    title: TodoItemTypes['todo']
-    setTitle: (title: TodoItemTypes['todo']) => void,
+    title: TodoItemTypes['title']
+    setTitle: (title: TodoItemTypes['title']) => void,
     AddTodos: () => void,
     deleteTodo: (id: TodoItemTypes['id']) => void,
-    completeTodo: (id: TodoItemTypes['id'], completed: TodoItemTypes['completed']) => void,
-    editTodo: (id: TodoItemTypes['id'], title: TodoItemTypes['todo']) => void,
+    completeTodo: (completed: boolean, todo: TodoItemTypes) => void,
+    editTodo: (todo: TodoItemTypes, title: TodoItemTypes['title']) => void,
     data?: any
 }
 
